@@ -1,164 +1,164 @@
-!DOCTYPE html
-html lang=en
-head
-meta charset=UTF-8
-meta name=viewport content=width=device-width, initial-scale=1.0
-titleA.I.M.A.G.E Builder (Online)title
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A.I.M.A.G.E Builder (Online)</title>
 
-style
+<style>
 body {
-  font-family 'Segoe UI', sans-serif;
-  background linear-gradient(135deg, #f6f7fb, #eef1ff);
-  margin 0;
-  padding 16px;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #f6f7fb, #eef1ff);
+  margin: 0;
+  padding: 16px;
 }
 
 .header {
-  displayflex;
-  justify-contentspace-between;
-  align-itemscenter;
-  margin-bottom16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
 }
 
 .lang button{
-  margin-left5px;
-  padding6px 10px;
-  bordernone;
-  border-radius6px;
-  cursorpointer;
+  margin-left:5px;
+  padding:6px 10px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
 }
 
-.active{background#4CAF50;colorwhite;}
+.active{background:#4CAF50;color:white;}
 
 .card {
-  background white;
-  padding 14px;
-  margin-bottom 12px;
-  border-radius 12px;
-  box-shadow 0 4px 12px rgba(0,0,0,0.08);
+  background: white;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.label {font-weightbold;}
+.label {font-weight:bold;}
 
 select {
-  width 100%;
-  padding 8px;
-  margin-top 5px;
-  border-radius 8px;
-  border 1px solid #ddd;
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 .output {
-  background #111;
-  color #0f0;
-  padding 12px;
-  border-radius 10px;
-  min-height 80px;
+  background: #111;
+  color: #0f0;
+  padding: 12px;
+  border-radius: 10px;
+  min-height: 80px;
 }
 
 button.copy {
-  margin-top10px;
-  width100%;
-  padding10px;
-  bordernone;
-  border-radius10px;
-  background#4CAF50;
-  colorwhite;
-  font-weightbold;
+  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#4CAF50;
+  color:white;
+  font-weight:bold;
 }
-style
-head
+</style>
+</head>
 
-body
+<body>
 
-div class=header
-  h2A.I.M.A.G.E Builderh2
+<div class="header">
+  <h2>A.I.M.A.G.E Builder</h2>
 
-  div class=lang
-    button onclick=setLang('en') id=enENbutton
-    button onclick=setLang('cn') id=cn中button
-    button onclick=setLang('bm') id=bmBMbutton
-  div
-div
+  <div class="lang">
+    <button onclick="setLang('en')" id="en">EN</button>
+    <button onclick="setLang('cn')" id="cn">中</button>
+    <button onclick="setLang('bm')" id="bm">BM</button>
+  </div>
+</div>
 
-!-- THEME --
-div class=card
-  div class=label id=themeLabeldiv
-  select id=themeselect
-div
+<!-- THEME -->
+<div class="card">
+  <div class="label" id="themeLabel"></div>
+  <select id="theme"></select>
+</div>
 
-!-- LEVEL --
-div class=card
-  div class=label id=levelLabeldiv
-  select id=level
-    option value=BASICBasicoption
-    option value=INTERMIntermediateoption
-    option value=ADVANCEAdvancedoption
-  select
-div
+<!-- LEVEL -->
+<div class="card">
+  <div class="label" id="levelLabel"></div>
+  <select id="level">
+    <option value="BASIC">Basic</option>
+    <option value="INTERM">Intermediate</option>
+    <option value="ADVANCE">Advanced</option>
+  </select>
+</div>
 
-!-- AIMAGE --
-div class=card
-  div class=label id=labelAdivselect id=Aselect
-  div class=label id=labelIdivselect id=Iselect
-  div class=label id=labelMdivselect id=Mselect
-  div class=label id=labelA2divselect id=A2select
-  div class=label id=labelGdivselect id=Gselect
-  div class=label id=labelEdivselect id=Eselect
-div
+<!-- AIMAGE -->
+<div class="card">
+  <div class="label" id="labelA"></div><select id="A"></select>
+  <div class="label" id="labelI"></div><select id="I"></select>
+  <div class="label" id="labelM"></div><select id="M"></select>
+  <div class="label" id="labelA2"></div><select id="A2"></select>
+  <div class="label" id="labelG"></div><select id="G"></select>
+  <div class="label" id="labelE"></div><select id="E"></select>
+</div>
 
-!-- OUTPUT --
-div class=card
-  div class=labelPromptdiv
-  div id=output class=outputdiv
-  button class=copy onclick=copyPrompt() id=copyBtnbutton
-div
+<!-- OUTPUT -->
+<div class="card">
+  <div class="label">Prompt</div>
+  <div id="output" class="output"></div>
+  <button class="copy" onclick="copyPrompt()" id="copyBtn"></button>
+</div>
 
-script
+<script>
 
- ================= GOOGLE SHEET JSON =================
-const SHEET_URL = https://script.google.com/macros/s/AKfycbwh677sne1XXoNjIzmQhEAfmjZ1c8ef72NaaUAzqlDTAoP3XuYTgQSiVjsR5eZEQkHI/exec;
+// ================= GOOGLE SHEET JSON =================
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwh677sne1XXoNjIzmQhEAfmjZ1c8ef72NaaUAzqlDTAoP3XuYTgQSiVjsR5eZEQkHI/exec; let DB = {}";
 
-let DB = {};  动态载入
+let DB = {}; // 动态载入
 
- ================= STYLE =================
+// ================= STYLE =================
 const STYLE_POOL = {
-  BASIC[
-    flat 2D cartoon storybook style, soft pastel colors
+  BASIC:[
+    "flat 2D cartoon storybook style, soft pastel colors"
   ],
-  INTERM[
-    anime style,watercolor,storybook illustration,
-    kawaii,soft pastel
+  INTERM:[
+    "anime style","watercolor","storybook illustration",
+    "kawaii","soft pastel"
   ],
-  ADVANCE[
-    cinematic lighting,ultra detailed,
-    fantasy epic,volumetric lighting,surreal
+  ADVANCE:[
+    "cinematic lighting","ultra detailed",
+    "fantasy epic","volumetric lighting","surreal"
   ]
 };
 
- ================= LANGUAGE =================
+// ================= LANGUAGE =================
 const lang = {
-  en{themeTheme,levelLevel,AA - Character,II - Identity,MM - Mood,A2A2 - Action,GG - Ground,EE - Style,copyCopy Prompt},
-  cn{theme主题,level等级,AA - 主角,II - 特点,MM - 情绪,A2A2 - 动作,GG - 场景,EE - 风格,copy复制提示词},
-  bm{themeTema,levelTahap,AA - Watak,II - Identiti,MM - Mood,A2A2 - Aksi,GG - Tempat,EE - Gaya,copySalin Prompt}
+  en:{theme:"Theme",level:"Level",A:"A - Character",I:"I - Identity",M:"M - Mood",A2:"A2 - Action",G:"G - Ground",E:"E - Style",copy:"Copy Prompt"},
+  cn:{theme:"主题",level:"等级",A:"A - 主角",I:"I - 特点",M:"M - 情绪",A2:"A2 - 动作",G:"G - 场景",E:"E - 风格",copy:"复制提示词"},
+  bm:{theme:"Tema",level:"Tahap",A:"A - Watak",I:"I - Identiti",M:"M - Mood",A2:"A2 - Aksi",G:"G - Tempat",E:"E - Gaya",copy:"Salin Prompt"}
 };
 
 function setLang(l){
-  document.getElementById(themeLabel).innerText = lang[l].theme;
-  document.getElementById(levelLabel).innerText = lang[l].level;
-  document.getElementById(labelA).innerText = lang[l].A;
-  document.getElementById(labelI).innerText = lang[l].I;
-  document.getElementById(labelM).innerText = lang[l].M;
-  document.getElementById(labelA2).innerText = lang[l].A2;
-  document.getElementById(labelG).innerText = lang[l].G;
-  document.getElementById(labelE).innerText = lang[l].E;
-  document.getElementById(copyBtn).innerText = lang[l].copy;
+  document.getElementById("themeLabel").innerText = lang[l].theme;
+  document.getElementById("levelLabel").innerText = lang[l].level;
+  document.getElementById("labelA").innerText = lang[l].A;
+  document.getElementById("labelI").innerText = lang[l].I;
+  document.getElementById("labelM").innerText = lang[l].M;
+  document.getElementById("labelA2").innerText = lang[l].A2;
+  document.getElementById("labelG").innerText = lang[l].G;
+  document.getElementById("labelE").innerText = lang[l].E;
+  document.getElementById("copyBtn").innerText = lang[l].copy;
 
-  document.querySelectorAll(.lang button).forEach(b=b.classList.remove(active));
-  document.getElementById(l).classList.add(active);
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.remove("active"));
+  document.getElementById(l).classList.add("active");
 }
 
- ================= LOAD DATA =================
+// ================= LOAD DATA =================
 async function loadDB(){
 
   let res = await fetch(SHEET_URL);
@@ -166,12 +166,12 @@ async function loadDB(){
 
   let temp = {};
 
-  rows.forEach(r={
+  rows.forEach(r=>{
     let t=r.Theme, l=r.Level;
 
     if(!temp[t]) temp[t]={};
     if(!temp[t][l]){
-      temp[t][l]={A[],I[],M[],A2[],G[]};
+      temp[t][l]={A:[],I:[],M:[],A2:[],G:[]};
     }
 
     if(r.A) temp[t][l].A.push(r.A);
@@ -186,16 +186,16 @@ async function loadDB(){
   initUI();
 }
 
- ================= INIT =================
-let currentTheme=;
+// ================= INIT =================
+let currentTheme="";
 
 function initUI(){
 
-  let t=document.getElementById(theme);
-  t.innerHTML=;
+  let t=document.getElementById("theme");
+  t.innerHTML="";
 
-  Object.keys(DB).forEach(k={
-    let o=document.createElement(option);
+  Object.keys(DB).forEach(k=>{
+    let o=document.createElement("option");
     o.value=k;
     o.textContent=k;
     t.appendChild(o);
@@ -203,74 +203,74 @@ function initUI(){
 
   currentTheme=Object.keys(DB)[0];
 
-  t.onchange=()={
+  t.onchange=()=>{
     currentTheme=t.value;
     render();
   };
 
-  document.getElementById(level).onchange=render;
+  document.getElementById("level").onchange=render;
 
-  setLang(en);
+  setLang("en");
   render();
 }
 
- ================= RENDER =================
+// ================= RENDER =================
 function render(){
 
-  let level=document.getElementById(level).value;
+  let level=document.getElementById("level").value;
   let data=DB[currentTheme][level];
 
   if(!data) return;
 
-  fill(A,data.A);
-  fill(I,data.I);
-  fill(M,data.M);
-  fill(A2,data.A2);
-  fill(G,data.G);
-  fill(E,STYLE_POOL[level]);
+  fill("A",data.A);
+  fill("I",data.I);
+  fill("M",data.M);
+  fill("A2",data.A2);
+  fill("G",data.G);
+  fill("E",STYLE_POOL[level]);
 
   bind();
   generate();
 }
 
- ================= FILL =================
+// ================= FILL =================
 function fill(id,list){
   let el=document.getElementById(id);
-  el.innerHTML=;
-  list.forEach(v={
-    let o=document.createElement(option);
+  el.innerHTML="";
+  list.forEach(v=>{
+    let o=document.createElement("option");
     o.value=v;
     o.textContent=v;
     el.appendChild(o);
   });
 }
 
- ================= GENERATE =================
+// ================= GENERATE =================
 function generate(){
-  let txt = `${v(A)} ${v(I)}, ${v(M)}, ${v(A2)} ${v(G)}, ${v(E)}`;
-  document.getElementById(output).innerText = txt;
+  let txt = `${v("A")} ${v("I")}, ${v("M")}, ${v("A2")} ${v("G")}, ${v("E")}`;
+  document.getElementById("output").innerText = txt;
 }
 
- ================= COPY =================
+// ================= COPY =================
 function copyPrompt(){
-  navigator.clipboard.writeText(document.getElementById(output).innerText);
-  alert(Copied!);
+  navigator.clipboard.writeText(document.getElementById("output").innerText);
+  alert("Copied!");
 }
 
 function bind(){
-  [A,I,M,A2,G,E].forEach(id={
+  ["A","I","M","A2","G","E"].forEach(id=>{
     document.getElementById(id).onchange=generate;
   });
 }
 
 function v(id){
-  return document.getElementById(id).value  ;
+  return document.getElementById(id).value || "";
 }
 
- ================= START =================
+// ================= START =================
 loadDB();
 
-script
+</script>
 
-body
-html
+</body>
+</html>
